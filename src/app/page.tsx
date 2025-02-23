@@ -1,41 +1,51 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Card } from "~/components/ui/card"
-import { PersonalInfoForm } from "./personal-info-form"
-import { ReviewSection } from "./review-section"
-import { SsnSection } from "./ssn-section"
-import { Button } from "~/components/ui/button"
-import { ChevronLeft } from "lucide-react"
+import { useState } from "react";
+import { Card } from "~/components/ui/card";
+import PersonalInfoForm from "./PersonalInfoFormNoSSR";
+import { ReviewSection } from "./review-section";
+import { SsnSection } from "./ssn-section";
+import { Button } from "~/components/ui/button";
+import { ChevronLeft } from "lucide-react";
+import { MailingAddressForm } from "./MailingAddressForm";
+import PersonForm from "./PersonForm";
+import { set } from "zod";
+import { usePerson } from "./PersonContext";
 
 export default function ImmigrationForm() {
-  const [step, setStep] = useState(1)
-  const [formData, setFormData] = useState({
-    firstName: "",
-    middleInitial: "",
-    lastName: "",
-    suffix: "",
-    dateOfBirth: "",
-    occupation: "",
-    ssn: "",
-    address: "",
-    phone: "",
-    state: "",
-    filingStatus: "",
-    hasDependents: false,
-  })
+  const [step, setStep] = useState(1);
+  // const [formData, setFormData] = useState({
+  //   firstName: "",
+  //   middleInitial: "",
+  //   lastName: "",
+  //   suffix: "",
+  //   dateOfBirth: "",
+  //   occupation: "",
+  //   ssn: "",
+  //   address: "",
+  //   phone: "",
+  //   state: "",
+  //   filingStatus: "",
+  //   hasDependents: false,
+  // });
+  const [formData, setFormData] = useState({});
+
+  const { personName } = usePerson();
 
   const handleUpdateFormData = (data: Partial<typeof formData>) => {
-    setFormData((prev) => ({ ...prev, ...data }))
-  }
+    // setFormData((prev) => ({ ...prev, ...data }));
+    setFormData(data);
+    console.log("formData", formData);
+  };
 
   const handleNext = () => {
-    setStep((prev) => prev + 1)
-  }
+    setStep((prev) => prev + 1);
+  };
 
   const handleBack = () => {
-    setStep((prev) => prev - 1)
-  }
+    setStep((prev) => prev - 1);
+  };
+
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
@@ -53,23 +63,42 @@ export default function ImmigrationForm() {
         </nav>
 
         <Card className="p-6">
+          {step === 0 && <PersonForm />}
           {step === 1 && (
-            <PersonalInfoForm formData={formData} onUpdateFormData={handleUpdateFormData} onNext={handleNext} />
+            <PersonalInfoForm
+              formData={formData}
+              onUpdateFormData={handleUpdateFormData}
+              onNext={handleNext}
+            />
           )}
-          {step === 2 && <SsnSection formData={formData} onUpdateFormData={handleUpdateFormData} onNext={handleNext} />}
+          {step === 2 && (
+            <MailingAddressForm
+              formData={formData}
+              onUpdateFormData={handleUpdateFormData}
+              onNext={handleNext}
+              onBack={handleBack}
+            />
+          )}
           {step === 3 && (
+            <SsnSection
+              formData={formData}
+              onUpdateFormData={handleUpdateFormData}
+              onNext={handleNext}
+              onBack={handleBack}
+            />
+          )}
+          {step === 4 && (
             <ReviewSection
               formData={formData}
               onBack={handleBack}
               onSubmit={async () => {
                 // Handle form submission here
-                console.log("Form submitted:", formData)
+                console.log("Form submitted:", formData);
               }}
             />
           )}
         </Card>
       </div>
     </div>
-  )
+  );
 }
-
