@@ -1,11 +1,20 @@
-import Link from "next/link";
+import Header from "../components/Header"
+import Sidebar from "../components/Sidebar"
+import Footer from "../components/Footer"
+import PersonalInformation from "../components/PersonalInformation"
 
-export default function HomePage() {
+export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-        { "Sup nerds you're subscribed right?" }
+    <div className="flex flex-col min-h-screen">
+      <Header />
+      <div className="flex flex-1">
+        <Sidebar />
+        <main className="flex-1 p-6 bg-gray-50">
+          <PersonalInformation />
+        </main>
       </div>
-    </main>
-  );
+      <Footer />
+    </div>
+  )
 }
+
