@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -14,39 +14,42 @@ import {
   FormItem,
   FormMessage,
 } from "~/components/ui/form";
+import { usePerson } from "./PersonContext";
+import axios from "axios";
 
 const ssnSchema = z.object({
-  ssn: z.string().regex(/^\d{3}-?\d{2}-?\d{4}$/, "Please enter a valid SSN"),
+  ssn: z.string(),
 });
 
 type SsnSectionProps = {
-  formData: any;
-  onUpdateFormData: (data: any) => void;
   onNext: () => void;
-  onBack: () => void;
 };
 
-export function SsnSection({
-  formData,
-  onUpdateFormData,
-  onNext,
-  onBack,
-}: SsnSectionProps) {
+export function SSNForm({ onNext }: SsnSectionProps) {
+  const { personId: personId } = usePerson();
+
   const form = useForm<z.infer<typeof ssnSchema>>({
     resolver: zodResolver(ssnSchema),
     defaultValues: {
-      ssn: formData.ssn,
+      ssn: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof ssnSchema>) {
-    onUpdateFormData(values);
-    onNext();
-  }
-
-  function onBackClick() {
-    onBack();
-  }
+  const addSSN = async (_: z.infer<typeof ssnSchema>) => {
+    axios
+      .post("/api/ssn", {
+        personId,
+        ssn: ssn.replaceAll("-", ""),
+      })
+      .then((res) => {
+        if (res.status === 201) {
+          onNext();
+        }
+      })
+      .catch((err: any) => {
+        console.error("Error in adding SSN:", err);
+      });
+  };
 
   const [ssn, setSsn] = useState("");
 
@@ -87,7 +90,7 @@ export function SsnSection({
       </div>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={form.handleSubmit(addSSN)} className="space-y-6">
           <FormField
             control={form.control}
             name="ssn"
@@ -115,8 +118,7 @@ export function SsnSection({
             <span>We take your privacy seriously</span>
           </div>
 
-          <div className="align-center flex justify-between">
-            <Button onClick={onBackClick}>Back</Button>
+          <div className="align-center flex justify-end">
             <Button type="submit">Continue</Button>
           </div>
         </form>

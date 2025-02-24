@@ -17,21 +17,15 @@ import {
 import { usePerson } from "./PersonContext";
 import axios from "axios";
 
-const mailingAddressSchema = z.object({
-  inCareOf: z.string().optional(),
-  streetNumber: z.string().min(1, "Street number is required"),
-  streetName: z.string().min(1, "Street name is required"),
-  unitType: z.string().optional(),
-  unitNumber: z.string().optional(),
-  cityOrTown: z.string().min(1, "City/Town is required"),
+const birthInfoSchema = z.object({
+  dateOfBirth: z.string().min(1, "Invalid date of birth"),
+  cityOrTown: z.string().optional(),
   state: z.string().optional(),
-  zipCode: z.string().optional(),
   province: z.string().optional(),
-  postalCode: z.string().optional(),
   country: z.string().min(1, "Country is required"),
 });
 
-type MailingAddressFormProps = {
+type BirthInfoFormProps = {
   onNext: () => void;
 };
 
@@ -104,37 +98,25 @@ const stateOptions: Option[] = [
   { value: "VIRGIN_ISLANDS", label: "Virgin Islands" },
 ];
 
-const unitTypes: Option[] = [
-  { value: "Apartment", label: "Apartment" },
-  { value: "Suite", label: "Suite" },
-  { value: "Floor", label: "Floor" },
-];
-
-export function MailingAddressForm({ onNext }: MailingAddressFormProps) {
+export function BirthInfoForm({ onNext }: BirthInfoFormProps) {
   const { personId: personId } = usePerson();
 
-  const form = useForm<z.infer<typeof mailingAddressSchema>>({
-    resolver: zodResolver(mailingAddressSchema),
+  const form = useForm<z.infer<typeof birthInfoSchema>>({
+    resolver: zodResolver(birthInfoSchema),
     defaultValues: {
-      inCareOf: undefined,
-      streetNumber: "",
-      streetName: "",
-      unitType: undefined,
-      unitNumber: undefined,
-      cityOrTown: "",
+      dateOfBirth: "",
+      cityOrTown: undefined,
       state: undefined,
-      zipCode: undefined,
       province: undefined,
-      postalCode: undefined,
       country: "",
     },
   });
 
   const addMailingAddress = async (
-    formData: z.infer<typeof mailingAddressSchema>,
+    formData: z.infer<typeof birthInfoSchema>,
   ) => {
     axios
-      .post("/api/address", {
+      .post("/api/birthInfo", {
         personId,
         formData,
       })
@@ -144,7 +126,7 @@ export function MailingAddressForm({ onNext }: MailingAddressFormProps) {
         }
       })
       .catch((err: any) => {
-        console.error("Error in adding mailing address:", err);
+        console.error("Error in adding birth information:", err);
       });
   };
 
@@ -167,41 +149,12 @@ export function MailingAddressForm({ onNext }: MailingAddressFormProps) {
           <div className="grid gap-4 md:grid-cols-2">
             <FormField
               control={form.control}
-              name="inCareOf"
+              name="dateOfBirth"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>In care of name</FormLabel>
+                  <FormLabel>Date of Birth</FormLabel>
                   <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="grid gap-4 md:grid-cols-2">
-            <FormField
-              control={form.control}
-              name="streetNumber"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Street number</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="streetName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Street name</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
+                    <Input {...field} type="date" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -210,50 +163,6 @@ export function MailingAddressForm({ onNext }: MailingAddressFormProps) {
           </div>
 
           <div className="grid gap-4 md:grid-cols-2">
-            <FormField
-              control={form.control}
-              name="unitType"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Unit type</FormLabel>
-                  <FormControl>
-                    <Select
-                      className="text-sm"
-                      {...field}
-                      options={unitTypes}
-                      onChange={(selectedOption) =>
-                        field.onChange(
-                          selectedOption ? selectedOption.value : "",
-                        )
-                      }
-                      value={
-                        unitTypes.find(
-                          (option) => option.value === field.value,
-                        ) || null
-                      }
-                      isClearable
-                      placeholder="Apt./Ste./Fl."
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="unitNumber"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Unit #</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
             <FormField
               control={form.control}
               name="cityOrTown"
@@ -299,38 +208,10 @@ export function MailingAddressForm({ onNext }: MailingAddressFormProps) {
 
           <FormField
             control={form.control}
-            name="zipCode"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Zip Code</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
             name="province"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Province</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="postalCode"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Postal Code</FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>

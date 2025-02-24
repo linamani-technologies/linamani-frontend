@@ -1,19 +1,21 @@
 // PersonContext.tsx
-"use client"
+"use client";
 
 import { createContext, useContext, useState, ReactNode } from "react";
 
 interface PersonContextType {
-  personName: string;
-  setPersonName: (name: string) => void;
+  personId: string;
+  setPersonId: (id: string) => void;
 }
 
 const PersonContext = createContext<PersonContextType | undefined>(undefined);
 
 export const PersonProvider = ({ children }: { children: ReactNode }) => {
-  const [personName, setPersonName] = useState("");
+  const [personId, setPersonId] = useState("");
   return (
-    <PersonContext.Provider value={{ personName, setPersonName }}>
+    <PersonContext.Provider
+      value={{ personId: personId, setPersonId: setPersonId }}
+    >
       {children}
     </PersonContext.Provider>
   );

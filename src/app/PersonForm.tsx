@@ -8,31 +8,35 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { usePerson } from "./PersonContext"; // Adjust the path as needed
 
-const PersonForm = () => {
+type PersonFormProps = {
+  onNext: () => void;
+};
+
+export default function PersonForm({ onNext }: PersonFormProps) {
   const [username, setUsername] = useState("");
   const [error, setError] = useState("");
-  const { setPersonName } = usePerson();
+  const { setPersonId: setPersonId } = usePerson();
 
   // Check username availability using the consolidated API.
   const createPerson = async () => {
-    try {
-      setError(""); // Clear previous errors
-      const res = await axios.post("/api/person", {
-        action: "create-person",
+    setError(""); // Clear previous errors
+    axios
+      .post("/api/person", {
         username,
+      })
+      .then((res) => {
+        if (res.status === 201) {
+          setPersonId(username);
+          onNext();
+        }
+      })
+      .catch((error) => {
+        if (error.response.status === 409) {
+          setError("Username is already taken. Please try another.");
+        } else {
+          setError("An unexpected error occurred. Please try again.");
+        }
       });
-
-      if (res.status === 201) {
-        setPersonName(username);
-        alert("Created!");
-      }
-    } catch (err: any) {
-      if (err.response.status === 409) {
-        setError("Username is already taken. Please try another.");
-      } else {
-        setError("An unexpected error occurred. Please try again.");
-      }
-    }
   };
 
   return (
@@ -55,6 +59,4 @@ const PersonForm = () => {
       </Card>
     </div>
   );
-};
-
-export default PersonForm;
+}

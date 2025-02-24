@@ -15,18 +15,18 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/ui/form";
+import { usePerson } from "./PersonContext";
+import axios from "axios";
 
-const personalInfoSchema = z.object({
+const nameInfoSchema = z.object({
   prefix: z.string().optional(),
   firstName: z.string().min(1, "First name is required"),
   middleName: z.string().optional(),
   lastName: z.string().min(1, "Last name is required"),
-  suffix: z.string().optional()
+  suffix: z.string().optional(),
 });
 
-type PersonalInfoFormProps = {
-  formData: any;
-  onUpdateFormData: (data: any) => void;
+type NameFormProps = {
   onNext: () => void;
 };
 
@@ -42,33 +42,35 @@ const prefixOptions: Option[] = [
   { value: "DR", label: "Dr" },
 ];
 
-const countryOptions: Option[] = [
-  { value: "US", label: "United States" },
-  { value: "CA", label: "Canada" },
-  { value: "GB", label: "United Kingdom" },
-  // Add more countries as needed
-];
+export default function NameForm({ onNext }: NameFormProps) {
+  const { personId: personId } = usePerson();
 
-export default function PersonalInfoForm({
-  formData,
-  onUpdateFormData,
-  onNext,
-}: PersonalInfoFormProps) {
-  const form = useForm<z.infer<typeof personalInfoSchema>>({
-    resolver: zodResolver(personalInfoSchema),
+  const form = useForm<z.infer<typeof nameInfoSchema>>({
+    resolver: zodResolver(nameInfoSchema),
     defaultValues: {
-      firstName: formData.firstName,
-      middleName: formData.middleName || "",
-      lastName: formData.lastName,
-      prefix: formData.prefix || "",
-      suffix: formData.suffix || ""
+      prefix: undefined,
+      firstName: "",
+      middleName: undefined,
+      lastName: "",
+      suffix: undefined,
     },
   });
 
-  function onSubmit(values: z.infer<typeof personalInfoSchema>) {
-    onUpdateFormData(values);
-    onNext();
-  }
+  const addName = async (formData: z.infer<typeof nameInfoSchema>) => {
+    axios
+      .post("/api/name", {
+        personId,
+        formData,
+      })
+      .then((res) => {
+        if (res.status === 201) {
+          onNext();
+        }
+      })
+      .catch((err: any) => {
+        console.error("Error in adding name:", err);
+      });
+  };
 
   return (
     <div className="space-y-6">
@@ -82,7 +84,7 @@ export default function PersonalInfoForm({
       </div>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={form.handleSubmit(addName)} className="space-y-6">
           <div className="grid gap-4 md:grid-cols-2">
             <FormField
               control={form.control}
@@ -134,7 +136,7 @@ export default function PersonalInfoForm({
                 <FormItem>
                   <FormLabel>Middle name (optional)</FormLabel>
                   <FormControl>
-                    <Input {...field} maxLength={1} />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
