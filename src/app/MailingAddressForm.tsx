@@ -170,9 +170,9 @@ export function MailingAddressForm({ onNext }: MailingAddressFormProps) {
               name="inCareOf"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>In care of name</FormLabel>
+                  <FormLabel htmlFor="inCareOf">In care of name</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input id="inCareOf" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -185,9 +185,9 @@ export function MailingAddressForm({ onNext }: MailingAddressFormProps) {
               name="streetNumber"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Street number</FormLabel>
+                  <FormLabel htmlFor="streetNumber">Street number</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input id="streetNumber" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -199,9 +199,9 @@ export function MailingAddressForm({ onNext }: MailingAddressFormProps) {
               name="streetName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Street name</FormLabel>
+                  <FormLabel htmlFor="streetName">Street name</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input id="streetName" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -215,9 +215,10 @@ export function MailingAddressForm({ onNext }: MailingAddressFormProps) {
               name="unitType"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Unit type</FormLabel>
+                  <FormLabel htmlFor="unitType">Unit type</FormLabel>
                   <FormControl>
                     <Select
+                      id="unitType"
                       className="text-sm"
                       {...field}
                       options={unitTypes}
@@ -245,9 +246,9 @@ export function MailingAddressForm({ onNext }: MailingAddressFormProps) {
               name="unitNumber"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Unit #</FormLabel>
+                  <FormLabel htmlFor="unitNumber">Unit #</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input id="unitNumber" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -259,9 +260,9 @@ export function MailingAddressForm({ onNext }: MailingAddressFormProps) {
               name="cityOrTown"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>City/Town</FormLabel>
+                  <FormLabel htmlFor="cityOrTown">City/Town</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input id="cityOrTown" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -274,9 +275,10 @@ export function MailingAddressForm({ onNext }: MailingAddressFormProps) {
             name="state"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>State</FormLabel>
+                <FormLabel htmlFor="state">State</FormLabel>
                 <FormControl>
                   <Select
+                    id="state"
                     className="text-sm"
                     {...field}
                     options={stateOptions}
@@ -302,9 +304,9 @@ export function MailingAddressForm({ onNext }: MailingAddressFormProps) {
             name="zipCode"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Zip Code</FormLabel>
+                <FormLabel htmlFor="zipCode">Zip Code</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input id="zipCode" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -316,9 +318,9 @@ export function MailingAddressForm({ onNext }: MailingAddressFormProps) {
             name="province"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Province</FormLabel>
+                <FormLabel htmlFor="province">Province</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input id="province" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -330,9 +332,9 @@ export function MailingAddressForm({ onNext }: MailingAddressFormProps) {
             name="postalCode"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Postal Code</FormLabel>
+                <FormLabel htmlFor="postalCode">Postal Code</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input id="postalCode" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -344,9 +346,10 @@ export function MailingAddressForm({ onNext }: MailingAddressFormProps) {
             name="country"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Country</FormLabel>
+                <FormLabel htmlFor="country">Country</FormLabel>
                 <FormControl>
                   <Select
+                    id="country"
                     className="text-sm"
                     {...field}
                     options={countryOptions}

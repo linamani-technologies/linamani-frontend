@@ -1,0 +1,7 @@
+{
+  "form": {
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "submit": "Continuar"
+  }
+}

@@ -91,12 +91,14 @@ export default function NameForm({ onNext }: NameFormProps) {
               name="prefix"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Prefix (optional)</FormLabel>
+                  <FormLabel htmlFor="prefix">Prefix (optional)</FormLabel>
                   <FormControl>
                     <Select
+                      id="prefix"
                       {...field}
                       options={prefixOptions}
                       onChange={(selectedOption) =>
+                        
                         field.onChange(
                           selectedOption ? selectedOption.value : "",
                         )
@@ -120,9 +122,11 @@ export default function NameForm({ onNext }: NameFormProps) {
               name="firstName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Given name (First name)</FormLabel>
+                  <FormLabel htmlFor="firstName">
+                    Given name (First name)
+                  </FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input id="firstName" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -134,9 +138,11 @@ export default function NameForm({ onNext }: NameFormProps) {
               name="middleName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Middle name (optional)</FormLabel>
+                  <FormLabel htmlFor="middleName">
+                    Middle name (optional)
+                  </FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input id="middleName" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -150,9 +156,11 @@ export default function NameForm({ onNext }: NameFormProps) {
               name="lastName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Family name (Last name)</FormLabel>
+                  <FormLabel htmlFor="lastName">
+                    Family name (Last name)
+                  </FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input id="lastName" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -164,9 +172,9 @@ export default function NameForm({ onNext }: NameFormProps) {
               name="suffix"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Suffix (optional)</FormLabel>
+                  <FormLabel htmlFor="suffix">Suffix (optional)</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder="Jr, Sr, etc." />
+                    <Input id="suffix" {...field} placeholder="Jr, Sr, etc." />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

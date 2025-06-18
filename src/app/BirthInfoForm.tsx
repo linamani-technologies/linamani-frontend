@@ -152,9 +152,9 @@ export function BirthInfoForm({ onNext }: BirthInfoFormProps) {
               name="dateOfBirth"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Date of Birth</FormLabel>
+                  <FormLabel htmlFor="dateOfBirth">Date of Birth</FormLabel>
                   <FormControl>
-                    <Input {...field} type="date" />
+                    <Input id="dateOfBirth" {...field} type="date" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -168,9 +168,9 @@ export function BirthInfoForm({ onNext }: BirthInfoFormProps) {
               name="cityOrTown"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>City/Town</FormLabel>
+                  <FormLabel htmlFor="cityOrTown">City/Town</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input id="cityOrTown" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -183,9 +183,10 @@ export function BirthInfoForm({ onNext }: BirthInfoFormProps) {
             name="state"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>State</FormLabel>
+                <FormLabel htmlFor="state">State</FormLabel>
                 <FormControl>
                   <Select
+                    id="state"
                     className="text-sm"
                     {...field}
                     options={stateOptions}
@@ -211,9 +212,9 @@ export function BirthInfoForm({ onNext }: BirthInfoFormProps) {
             name="province"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Province</FormLabel>
+                <FormLabel htmlFor="province">Province</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input id="province" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -225,9 +226,10 @@ export function BirthInfoForm({ onNext }: BirthInfoFormProps) {
             name="country"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Country</FormLabel>
+                <FormLabel htmlFor="country">Country</FormLabel>
                 <FormControl>
                   <Select
+                    id="country"
                     className="text-sm"
                     {...field}
                     options={countryOptions}

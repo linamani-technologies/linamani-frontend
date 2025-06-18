@@ -98,6 +98,7 @@ export function SSNForm({ onNext }: SsnSectionProps) {
               <FormItem>
                 <FormControl>
                   <Input
+                    id="ssn"
                     {...field}
                     placeholder="XXX-XX-XXXX"
                     value={ssn}
