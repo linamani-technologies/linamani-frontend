@@ -115,19 +115,20 @@ export function BirthInfoForm({ onNext }: BirthInfoFormProps) {
   const addMailingAddress = async (
     formData: z.infer<typeof birthInfoSchema>,
   ) => {
-    axios
-      .post("/api/birthInfo", {
-        personId,
-        formData,
-      })
-      .then((res) => {
-        if (res.status === 201) {
-          onNext();
-        }
-      })
-      .catch((err: any) => {
-        console.error("Error in adding birth information:", err);
-      });
+    onNext();
+    // axios
+    //   .post("/api/birthInfo", {
+    //     personId,
+    //     formData,
+    //   })
+    //   .then((res) => {
+    //     if (res.status === 201) {
+    //       onNext();
+    //     }
+    //   })
+    //   .catch((err: any) => {
+    //     console.error("Error in adding birth information:", err);
+    //   });
   };
 
   return (

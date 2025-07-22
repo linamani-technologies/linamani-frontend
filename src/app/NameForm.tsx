@@ -1,8 +1,8 @@
+// --- NameForm.tsx ---
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
-import Select from "react-select";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Button } from "~/components/ui/button";
@@ -16,12 +16,19 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { usePerson } from "./PersonContext";
-import axios from "axios";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "~/components/ui/select";
 
 const nameInfoSchema = z.object({
   prefix: z.string().optional(),
   firstName: z.string().min(1, "First name is required"),
   middleName: z.string().optional(),
+  otherName: z.string().optional(),
   lastName: z.string().min(1, "Last name is required"),
   suffix: z.string().optional(),
 });
@@ -30,20 +37,8 @@ type NameFormProps = {
   onNext: () => void;
 };
 
-type Option = {
-  value: string;
-  label: string;
-};
-
-const prefixOptions: Option[] = [
-  { value: "MR", label: "Mr" },
-  { value: "MRS", label: "Mrs" },
-  { value: "MS", label: "Ms" },
-  { value: "DR", label: "Dr" },
-];
-
 export default function NameForm({ onNext }: NameFormProps) {
-  const { personId: personId } = usePerson();
+  const { personId } = usePerson();
 
   const form = useForm<z.infer<typeof nameInfoSchema>>({
     resolver: zodResolver(nameInfoSchema),
@@ -51,25 +46,27 @@ export default function NameForm({ onNext }: NameFormProps) {
       prefix: undefined,
       firstName: "",
       middleName: undefined,
+      otherName: undefined,
       lastName: "",
       suffix: undefined,
     },
   });
 
   const addName = async (formData: z.infer<typeof nameInfoSchema>) => {
-    axios
-      .post("/api/name", {
-        personId,
-        formData,
-      })
-      .then((res) => {
-        if (res.status === 201) {
-          onNext();
-        }
-      })
-      .catch((err: any) => {
-        console.error("Error in adding name:", err);
-      });
+    onNext();
+    // axios
+    //   .post("/api/name", {
+    //     personId,
+    //     formData,
+    //   })
+    //   .then((res) => {
+    //     if (res.status === 201) {
+    //       onNext();
+    //     }
+    //   })
+    //   .catch((err: any) => {
+    //     console.error("Error in adding name:", err);
+    //   });
   };
 
   return (
@@ -92,26 +89,22 @@ export default function NameForm({ onNext }: NameFormProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel htmlFor="prefix">Prefix (optional)</FormLabel>
-                  <FormControl>
-                    <Select
-                      id="prefix"
-                      {...field}
-                      options={prefixOptions}
-                      onChange={(selectedOption) =>
-                        
-                        field.onChange(
-                          selectedOption ? selectedOption.value : "",
-                        )
-                      }
-                      value={
-                        prefixOptions.find(
-                          (option) => option.value === field.value,
-                        ) || null
-                      }
-                      isClearable
-                      placeholder="Select a prefix"
-                    />
-                  </FormControl>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a prefix" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="MR">Mr</SelectItem>
+                      <SelectItem value="MRS">Mrs</SelectItem>
+                      <SelectItem value="MS">Ms</SelectItem>
+                      <SelectItem value="DR">Dr</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -132,7 +125,9 @@ export default function NameForm({ onNext }: NameFormProps) {
                 </FormItem>
               )}
             />
+          </div>
 
+          <div className="grid gap-4 md:grid-cols-2">
             <FormField
               control={form.control}
               name="middleName"
@@ -143,6 +138,22 @@ export default function NameForm({ onNext }: NameFormProps) {
                   </FormLabel>
                   <FormControl>
                     <Input id="middleName" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="otherName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel htmlFor="otherName">
+                    Other name (optional)
+                  </FormLabel>
+                  <FormControl>
+                    <Input id="otherName" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -166,7 +177,7 @@ export default function NameForm({ onNext }: NameFormProps) {
                 </FormItem>
               )}
             />
-
+            {/* 
             <FormField
               control={form.control}
               name="suffix"
@@ -179,7 +190,7 @@ export default function NameForm({ onNext }: NameFormProps) {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
           </div>
 
           <div className="flex justify-end">

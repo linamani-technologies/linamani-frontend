@@ -3,7 +3,7 @@ import "../styles/globals.css";
 import { Inter } from "next/font/google";
 import { PersonProvider } from "./PersonContext";
 import { SidebarProvider } from "~/components/ui/sidebar";
-import { AppSidebar } from "~/components/app-sidebar";
+import { AppSidebar } from "~/components/dashboard/app-sidebar";
 import { cookies } from "next/headers";
 import Providers from "./providers";
 

@@ -1,0 +1,62 @@
+{
+  "Part A.I": {
+    "title": "Information About You",
+    "1": "Alien Registration Number (if any)",
+    "2": "U.S. Social Security Number (if any)",
+    "3": "USCIS Online Account Number (if any)",
+    "4": "Complete Last Name (Surname)",
+    "5": "First Name",
+    "6": "Middle Name (if any)",
+    "7": "Other Names Used (e.g., maiden name, aliases)",
+    "8": "Current Address in the U.S. (where you live)",
+    "9": "Mailing Address (if different from above)",
+    "10": "Sex (Male / Female)",
+    "11": "Marital Status (Single, Married, Divorced, Widowed)",
+    "12": "Date of Birth (mm/dd/yyyy)",
+    "13": "City and Country of Birth",
+    "14": "Current Nationality",
+    "15": "Nationality at Birth",
+    "16": "Ethnic / Racial / Tribal Group",
+    "17": "Religion",
+    "18": "Have you ever been in Immigration Court proceedings?",
+    "19a": "When did you last leave your country?",
+    "19b": "Current I-94 Number",
+    "19c": "Date, Place, and Status for Each U.S. Entry",
+    "20": "Country Issuing Passport or Travel Document",
+    "21": "Passport / Travel Document Number",
+    "22": "Expiration Date of Passport (mm/dd/yyyy)",
+    "23": "Native Language (include dialect)",
+    "24": "Are you fluent in English?",
+    "25": "What other languages do you speak fluently?"
+  },
+  "Part A.II": {
+    "title": "Information About Your Spouse and Children",
+    "Spouse": {
+      "Name": "Full Name of Spouse",
+      "DOB": "Date of Birth",
+      "Nationality": "Nationality",
+      "IsInUS": "Is this person in the U.S.?",
+      "MaritalStatus": "Marital Status",
+      "ImmigrationCourt": "Is your spouse in Immigration Court proceedings?"
+    },
+    "Children": {
+      "ListAll": "List all of your children (regardless of age, location, or marital status)"
+    }
+  },
+  "Part A.III": {
+    "title": "Information About Your Background",
+    "1": "Last address before coming to the U.S.",
+    "2": "All addresses during the past 5 years",
+    "3": "Education details",
+    "4": "Employment history for the past 5 years",
+    "5": "Information about parents and siblings"
+  },
+  "Part B": {
+    "title": "Information About Your Application",
+    "1": "Why are you applying for asylum or withholding of removal?",
+    "2": "Have you or your family members ever been charged, arrested, or convicted?",
+    "3A": "Have you or your family ever belonged to any organization?",
+    "3B": "Are you still involved with the organization?",
+    "4": "Are you afraid of being tortured if you return to your country?"
+  }
+}

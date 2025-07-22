@@ -1,0 +1,62 @@
+{
+  "Part A.I": {
+    "title": "Información sobre usted",
+    "1": "Número de registro de extranjero (si lo tiene)",
+    "2": "Número de Seguro Social de EE. UU. (si lo tiene)",
+    "3": "Número de cuenta en línea de USCIS (si lo tiene)",
+    "4": "Apellido completo (apellido)",
+    "5": "Primer nombre",
+    "6": "Segundo nombre (si lo tiene)",
+    "7": "Otros nombres utilizados (por ejemplo, apellido de soltera, alias)",
+    "8": "Dirección actual en EE. UU. (donde reside)",
+    "9": "Dirección postal (si es diferente de la anterior)",
+    "10": "Sexo (masculino / femenino)",
+    "11": "Estado civil (soltero, casado, divorciado, viudo/a)",
+    "12": "Fecha de nacimiento (mm/dd/aaaa)",
+    "13": "Ciudad y país de nacimiento",
+    "14": "Nacionalidad actual",
+    "15": "Nacionalidad al nacer",
+    "16": "Grupo étnico / racial / tribal",
+    "17": "Religión",
+    "18": "¿Ha tenido procedimientos ante un tribunal de inmigración anteriormente?",
+    "19a": "¿Cuándo salió de su país por última vez?",
+    "19b": "Número I-94 actual",
+    "19c": "Fecha, lugar y estatus de cada entrada a EE. UU.",
+    "20": "País emisor del pasaporte o documento de viaje",
+    "21": "Número de pasaporte / documento de viaje",
+    "22": "Fecha de vencimiento del pasaporte (mm/dd/aaaa)",
+    "23": "Lengua materna (incluyendo dialecto)",
+    "24": "¿Habla inglés con fluidez?",
+    "25": "¿Qué otros idiomas habla con fluidez?"
+  },
+  "Part A.II": {
+    "title": "Información sobre su cónyuge e hijos",
+    "Spouse": {
+      "Name": "Nombre completo del cónyuge",
+      "DOB": "Fecha de nacimiento",
+      "Nationality": "Nacionalidad",
+      "IsInUS": "¿Está esta persona en EE. UU.?",
+      "MaritalStatus": "Estado civil",
+      "ImmigrationCourt": "¿Está su cónyuge en procedimientos de inmigración?"
+    },
+    "Children": {
+      "ListAll": "Proporcione información sobre todos sus hijos (sin importar edad, ubicación o estado civil)"
+    }
+  },
+  "Part A.III": {
+    "title": "Información sobre su historial",
+    "1": "Última dirección antes de venir a EE. UU.",
+    "2": "Todas las direcciones durante los últimos 5 años",
+    "3": "Detalles de educación",
+    "4": "Historial de empleo de los últimos 5 años",
+    "5": "Información sobre padres y hermanos"
+  },
+  "Part B": {
+    "title": "Información sobre su solicitud",
+    "1": "¿Por qué solicita asilo o retención de expulsión?",
+    "2": "¿Usted o un miembro de su familia ha sido acusado, arrestado o condenado?",
+    "3A": "¿Usted o su familia han pertenecido a alguna organización?",
+    "3B": "¿Todavía está involucrado con la organización?",
+    "4": "¿Tiene miedo de ser torturado si regresa a su país?"
+  }
+}

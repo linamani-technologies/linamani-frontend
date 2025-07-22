@@ -39,6 +39,6 @@
     "**/*.js",
     ".next/types/**/*.ts",
     "locales/**/*.json"
-  ],
+, "src/app/form/page.tsx"  ],
   "exclude": ["node_modules"]
 }
