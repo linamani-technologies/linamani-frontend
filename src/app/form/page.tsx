@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -86,6 +86,12 @@ export default function I589FormPage() {
   const [submittedData, setSubmittedData] = useState<FormData | null>(null);
   const [language, setLanguage] = useState<"en" | "hi" | "es">("en");
   const translations = formTranslations[language];
+  const [userId, setUserId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const storedId = localStorage.getItem("user_id");
+    setUserId(storedId);
+  }, []);
 
   const onSubmit = async (data: FormData) => {
     const structured = convertFlatToNested(data); // original responses
@@ -100,11 +106,11 @@ export default function I589FormPage() {
 
       // Step 2: Submit the full form to API_FORMS
       const formPayload = {
-        user_id: "811f0fda-8f15-4e2c-b5bb-80aa32198244", // replace with actual UUID
+        user_id: userId, // replace with actual UUID
         form_type: "I-589",
         date_created: new Date().toISOString(),
         last_modified: new Date().toISOString(),
-        source_language: "hi", // or "hi"
+        source_language: language,
         form_contents: structured,
         translated_contents: translated,
       };

@@ -1,7 +1,6 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { API_USERS } from "~/lib/api";
 import { useState } from "react";
@@ -15,30 +14,33 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
-const schema = z.object({
-  username: z.string().min(3),
-  email: z.string().email(),
-  phone: z.string().min(8),
-  password: z
-    .string()
-    .min(8)
-    .regex(/[A-Z]/, "Must contain uppercase")
-    .regex(/[a-z]/, "Must contain lowercase")
-    .regex(/\d/, "Must contain a number")
-    .regex(/[^a-zA-Z0-9]/, "Must contain special character"),
-});
-
-type FormData = z.infer<typeof schema>;
+import { useRouter } from "next/navigation";
+import { schema } from "./schema";
+import { FormData } from "./types";
 
 export default function RegisterPage() {
+  const router = useRouter();
   const [success, setSuccess] = useState(false);
-  const form = useForm<FormData>({ resolver: zodResolver(schema) });
+  const form = useForm<FormData>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      username: "",
+      email: "",
+      password: "",
+      phone: "",
+    },
+  });
 
   const onSubmit = async (data: FormData) => {
     try {
-      await API_USERS.post("/register", data);
+      const res = await API_USERS.post("/register", data);
+      const user = res.data;
+
+      localStorage.setItem("user_id", user.id);
+      localStorage.setItem("token", user.token || "");
+
       setSuccess(true);
+      router.push("/form");
     } catch (err: any) {
       alert(err.response?.data?.detail || "Registration failed");
     }

@@ -25,7 +25,10 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>
+        <div className="flex min-h-screen w-full">
+          <main className="flex-1">{children}</main>
+        </div>
+        {/* <Providers>
           <SidebarProvider>
             <PersonProvider>
               <div className="flex min-h-screen w-full">
@@ -34,7 +37,7 @@ export default async function RootLayout({
               </div>
             </PersonProvider>
           </SidebarProvider>
-        </Providers>
+        </Providers> */}
       </body>
     </html>
   );

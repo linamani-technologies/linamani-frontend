@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { LoginResponse } from "./types";
+import { useRouter } from "next/navigation";
 
 const schema = z.object({
   email: z.string().email(),
@@ -24,8 +26,12 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export default function LoginPage() {
+  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
-  const form = useForm<FormData>({ resolver: zodResolver(schema) });
+  const form = useForm<FormData>({
+    resolver: zodResolver(schema),
+    defaultValues: { email: "", password: "" },
+  });
 
   const onSubmit = async (data: FormData) => {
     try {
@@ -42,10 +48,11 @@ export default function LoginPage() {
         },
       );
 
-      type LoginResponse = { access_token: string; token_type: string };
-      const { access_token } = res.data as LoginResponse;
+      const { access_token, user_id } = res.data as LoginResponse;
+      localStorage.setItem("user_id", user_id);
       localStorage.setItem("token", access_token);
-      window.location.href = "/me"; // or use router.push() if using useRouter()
+      console.log(user_id);
+      router.push("/");
     } catch (err: any) {
       setError(err.response?.data?.detail || "Login failed");
     }

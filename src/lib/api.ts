@@ -1,13 +1,14 @@
 import axios from "axios";
 
+const BASE_URL = "https://linamani-backend.onrender.com";
 export const API_USERS = axios.create({
-  baseURL: "http://localhost:8000/api/v1/users",
+  baseURL: `${BASE_URL}/api/v1/users`,
 });
 
 export const API_FORMS = axios.create({
-  baseURL: "http://localhost:8000/api/v1/forms",
+  baseURL: `${BASE_URL}/api/v1/forms`,
 });
 
 export const API_TRANSLATE = axios.create({
-  baseURL: "http://localhost:8000/api/v1/translate",
+  baseURL: `${BASE_URL}/api/v1/translate`,
 });
