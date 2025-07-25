@@ -26,6 +26,8 @@ import formJson from "./i589_form_hindi_translation.json";
 import { API_FORMS, API_TRANSLATE } from "~/lib/api";
 import { formTranslations } from "./form_translations";
 import { requiredShape } from "./schema";
+import { useRouter } from "next/navigation";
+import LoginPage from "../login/page";
 
 function sanitizeKey(str: string) {
   return str.replace(/[^a-zA-Z0-9]/g, "_");
@@ -79,6 +81,7 @@ const convertFlatToNested = (flat: FormData) => {
 };
 
 export default function I589FormPage() {
+  const router = useRouter();
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues,
@@ -87,11 +90,29 @@ export default function I589FormPage() {
   const [language, setLanguage] = useState<"en" | "hi" | "es">("en");
   const translations = formTranslations[language];
   const [userId, setUserId] = useState<string | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null); // null = checking
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsAuthenticated(!!token);
+  }, []);
 
   useEffect(() => {
     const storedId = localStorage.getItem("user_id");
     setUserId(storedId);
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("result_json");
+    setIsAuthenticated(false);
+    router.push("/");
+  };
+
+  if (!isAuthenticated) {
+    return <LoginPage />;
+  }
 
   const onSubmit = async (data: FormData) => {
     const structured = convertFlatToNested(data); // original responses
@@ -119,6 +140,11 @@ export default function I589FormPage() {
       const submitRes = await API_FORMS.post("/", formPayload);
       console.log("Form successfully submitted:", submitRes.data);
       setSubmittedData(translated); // optional: display translated version
+      localStorage.setItem(
+        "result_json",
+        JSON.stringify(convertFlatToNested(translated), null, 2),
+      );
+      router.push("/result");
     } catch (error) {
       console.error("Submission error:", error);
     }
@@ -126,6 +152,11 @@ export default function I589FormPage() {
 
   return (
     <div className="mx-auto max-w-4xl space-y-6 p-6">
+      <div className="flex justify-end">
+        <Button variant="default" onClick={handleLogout}>
+          Logout
+        </Button>
+      </div>
       <div className="mb-4 max-w-xs">
         <label className="mb-1 block text-sm font-medium">
           Choose Language

@@ -15,8 +15,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 import { LoginResponse } from "./types";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const schema = z.object({
   email: z.string().email(),
@@ -52,8 +54,10 @@ export default function LoginPage() {
       localStorage.setItem("user_id", user_id);
       localStorage.setItem("token", access_token);
       console.log(user_id);
-      router.push("/");
+      toast.success("Logging in!");
+      router.push("/form");
     } catch (err: any) {
+      toast.error("Login failed");
       setError(err.response?.data?.detail || "Login failed");
     }
   };
@@ -92,8 +96,16 @@ export default function LoginPage() {
             )}
           />
 
-          <Button type="submit" className="w-full">
+          <Button
+            type="submit"
+            variant="default"
+            size="default"
+            className="w-full"
+          >
             Log In
+          </Button>
+          <Button asChild variant="ghost" size="default" className="w-full">
+            <Link href="/register">Register</Link>
           </Button>
         </form>
       </Form>
